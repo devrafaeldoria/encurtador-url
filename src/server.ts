@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 import { mongoConnection } from './database/mongo';
+import mainRoutes from './routes/api';
 
 dotenv.config();
 
@@ -12,6 +13,8 @@ const app = express();
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+app.use(mainRoutes);
 
 app.get('/', async (req: Request, res: Response) => {
   return res.json({ message: 'hello world' });
