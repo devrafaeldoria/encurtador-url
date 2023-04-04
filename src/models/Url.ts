@@ -3,6 +3,7 @@ import { Schema, Model, model, Document } from 'mongoose';
 export interface UrlInterface extends Document {
   idUser: string;
   url: string;
+  name: string;
   uses: number;
   date: Date;
 }
@@ -10,6 +11,7 @@ export interface UrlInterface extends Document {
 const UrlSchema = new Schema<UrlInterface>({
   idUser: String,
   url: String,
+  name: String,
   uses: Number,
   date: Date
 });
