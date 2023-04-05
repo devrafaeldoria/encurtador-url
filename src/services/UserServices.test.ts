@@ -47,7 +47,7 @@ describe('testing user services', () => {
 
   it('should be able to find a user by id', async () => {
     const userId = (await UserServices.findByEmail('test@gmail')) as UserInterface;
-    const user = await UserServices.findById(userId._id);
+    const user = await UserServices.findById(userId.id);
     expect(user).not.toBeInstanceOf(Error);
     expect(user).toHaveProperty('_id');
   });

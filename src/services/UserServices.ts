@@ -1,5 +1,6 @@
 import User from '../models/User';
 import bcrypt from 'bcrypt';
+import { v4 } from 'uuid';
 
 export const findByEmail = async (email: string) => {
   const user = await User.findOne({ email });
@@ -20,7 +21,7 @@ export const findByName = async (name: string) => {
 };
 
 export const findById = async (id: string) => {
-  const user = await User.findById(id);
+  const user = await User.findOne({ id });
   if (user) {
     return user;
   } else {
@@ -31,7 +32,8 @@ export const findById = async (id: string) => {
 export const create = async (name: string, email: string, password: string) => {
   if ((await findByEmail(email)) instanceof Error && (await findByName(name)) instanceof Error) {
     const hash = await bcrypt.hash(password, 10);
-    return await User.create({ name, email, password: hash });
+    const uuid = v4();
+    return await User.create({ name, email, password: hash, id: uuid });
   } else {
     return new Error('User already exists');
   }
@@ -74,5 +76,17 @@ export const update = async (id: string, name: string | false, email: string | f
       }
       return await findByEmail(email as string);
     }
+  }
+};
+
+export const verifyUserHasUrl = async (idUser: string, idUrl: string) => {
+  const user = await User.findOne({
+    _id: idUser,
+    urls: idUrl
+  });
+  if (user) {
+    return true;
+  } else {
+    return new Error('Not authorized');
   }
 };
