@@ -81,10 +81,10 @@ export const update = async (id: string, name: string | false, email: string | f
 
 export const verifyUserHasUrl = async (idUser: string, idUrl: string) => {
   const user = await User.findOne({
-    _id: idUser,
+    id: idUser,
     urls: idUrl
   });
-  if (user) {
+  if (user != null) {
     return true;
   } else {
     return new Error('Not authorized');
