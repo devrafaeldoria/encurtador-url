@@ -45,7 +45,6 @@ export const login = async (email: string, password: string) => {
     return new Error('User not found');
   } else {
     const match = await bcrypt.compare(password, user.password);
-    console.log(match);
     if (match) {
       return user;
     } else {

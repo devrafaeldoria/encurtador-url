@@ -16,10 +16,6 @@ app.use(express.json());
 
 app.use(mainRoutes);
 
-app.get('/', async (req: Request, res: Response) => {
-  return res.json({ message: 'hello world' });
-});
-
 app.use((req: Request, res: Response) => {
   return res.status(404).json({ error: 'endpoint not found' });
 });
