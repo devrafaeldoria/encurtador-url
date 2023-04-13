@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { UserInterface } from '@/models/User';
-// import { AuthRequest } from '@/middlewares/auth';
+import { AuthRequest } from '@/middlewares/auth';
 import JWT from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import * as UserServices from '../services/UserServices';
@@ -40,4 +40,9 @@ export const login = async (req: Request, res: Response) => {
     const token = JWT.sign({ id: user.id }, process.env.JWT_SECRET_KEY as string, { expiresIn: '2h' });
     return res.json({ user, token });
   }
+};
+
+export const showProfile = async (req: AuthRequest, res: Response) => {
+  const user = await UserServices.findById(req.userId as string);
+  return res.json(user);
 };
