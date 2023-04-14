@@ -2,6 +2,7 @@ import Url from '../models/Url';
 import * as UserServices from './UserServices';
 import validator from 'validator';
 import { v4 } from 'uuid';
+import { addUrlUser } from './UserServices';
 
 export const findByName = async (name: string) => {
   const url = await Url.findOne({ name });
@@ -29,12 +30,16 @@ export const create = async (idUser: string, url: string, name: string) => {
     if (validator.isURL(url)) {
       if ((await findByName(name)) instanceof Error) {
         const id = v4();
-        return await Url.create({
+        const newUrl = await Url.create({
           name,
           url,
           idUser,
           id
         });
+
+        addUrlUser(user.id, newUrl.id);
+
+        return newUrl;
       } else {
         return new Error('Same name');
       }

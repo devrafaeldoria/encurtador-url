@@ -46,3 +46,8 @@ export const showProfile = async (req: AuthRequest, res: Response) => {
   const user = await UserServices.findById(req.userId as string);
   return res.json(user);
 };
+
+export const showUrls = async (req: AuthRequest, res: Response) => {
+  const userUrls = (await UserServices.findById(req.userId as string)) as UserInterface;
+  res.json({ urls: userUrls.urls });
+};

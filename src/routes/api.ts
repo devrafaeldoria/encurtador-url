@@ -12,4 +12,6 @@ router.get('/user', Auth, UserController.showProfile);
 
 router.post('/url', Auth, UrlController.create);
 
+router.get('/urls', Auth, UserController.showUrls);
+
 export default router;

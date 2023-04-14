@@ -1,4 +1,4 @@
-import User from '../models/User';
+import User, { UserInterface } from '../models/User';
 import bcrypt from 'bcrypt';
 import { v4 } from 'uuid';
 
@@ -88,4 +88,15 @@ export const verifyUserHasUrl = async (idUser: string, idUrl: string) => {
   } else {
     return new Error('Not authorized');
   }
+};
+
+export const addUrlUser = async (idUser: string, idUrl: string) => {
+  const user = (await findById(idUser)) as UserInterface;
+
+  if (!user) {
+    return new Error('User not found');
+  }
+
+  user.urls.push(idUrl);
+  await user.save();
 };
