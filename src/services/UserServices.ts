@@ -100,3 +100,20 @@ export const addUrlUser = async (idUser: string, idUrl: string) => {
   user.urls.push(idUrl);
   await user.save();
 };
+
+export const deleteUrlUser = async (idUser: string, idUrl: string) => {
+  const user = await findById(idUser);
+
+  if (user instanceof Error) {
+    return new Error('User not found');
+  }
+
+  const index = user.urls.indexOf(idUrl);
+
+  if (index !== -1) {
+    user.urls.splice(index, 1);
+    await user.save();
+  } else {
+    return new Error('Url not found in user');
+  }
+};
