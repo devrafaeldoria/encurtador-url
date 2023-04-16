@@ -61,12 +61,12 @@ export const useUrl = async (name: string) => {
   }
 };
 
-export const deleteUrl = async (name: string) => {
-  const url = await findByName(name);
+export const deleteUrl = async (id: string) => {
+  const url = await findById(id);
   if (url instanceof Error) {
     return new Error('Name not found');
   } else {
-    await Url.deleteOne({ name });
+    await Url.deleteOne({ id });
     return true;
   }
 };

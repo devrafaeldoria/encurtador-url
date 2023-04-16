@@ -14,4 +14,8 @@ router.post('/url', Auth, UrlController.create);
 
 router.get('/urls', Auth, UserController.showUrls);
 
+router.delete('/url/:id', Auth, UrlController.deleteUrl);
+
+router.get('/url/:id', UrlController.showUrl);
+
 export default router;
