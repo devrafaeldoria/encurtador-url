@@ -18,4 +18,6 @@ router.delete('/url/:id', Auth, UrlController.deleteUrl);
 
 router.get('/url/:id', UrlController.showUrl);
 
+router.get('/res/:name', UrlController.useUrl);
+
 export default router;

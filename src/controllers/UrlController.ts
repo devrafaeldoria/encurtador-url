@@ -50,3 +50,23 @@ export const showUrl = async (req: Request, res: Response) => {
 
   return res.json({ url });
 };
+
+export const useUrl = async (req: Request, res: Response) => {
+  const { name } = req.params;
+
+  const hasName = await UrlServices.findByName(name);
+
+  if (hasName instanceof Error) {
+    return res.status(404).json({ error: hasName.message });
+  }
+
+  const url = hasName.url;
+  const baseUrl = 'https://';
+
+  hasName.uses += 1;
+  await hasName.save();
+
+  console.log(hasName.uses);
+
+  res.redirect(`${baseUrl}${url}`);
+};
