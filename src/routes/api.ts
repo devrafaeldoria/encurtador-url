@@ -20,6 +20,8 @@ router.get('/url/:id', UrlController.showUrl);
 
 router.get('/res/:name', UrlController.useUrl);
 
-router.put('/url/:id/:newName', Auth, UrlController.changeNameUrl);
+router.put('/url/:id/name-:newName', Auth, UrlController.changeNameUrl);
+
+router.put('/url/:id/url-:newUrl', Auth, UrlController.changeUrl);
 
 export default router;

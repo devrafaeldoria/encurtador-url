@@ -95,3 +95,22 @@ export const changeNameUrl = async (req: AuthRequest, res: Response) => {
     return res.status(401).json({ error: 'name already exists' });
   }
 };
+
+export const changeUrl = async (req: AuthRequest, res: Response) => {
+  const userId = req.userId;
+  const { id, newUrl } = req.params;
+
+  if (!id && !newUrl) {
+    return res.status(400).json({ error: 'nothing to update' });
+  }
+
+  const authorizedUpdate = await UserServices.verifyUserHasUrl(userId as string, id);
+
+  if (authorizedUpdate instanceof Error) {
+    return res.status(403).json({ error: authorizedUpdate.message });
+  }
+
+  await UrlServices.updateUrl(userId as string, id, newUrl);
+
+  return res.json({ update: true });
+};
