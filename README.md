@@ -1,7 +1,7 @@
 # Encurtador de URL com Node.js, TypeScript e MongoDB
 
 - Deploy - Em andamento!
-- Documentação - [Clique Aqui!](./github/doc.md)
+- Documentação - [Clique Aqui!](./github/doc.md) **finalizando
 
 ### Este é um projeto de encurtador de URL que utiliza as seguintes tecnologias
 
