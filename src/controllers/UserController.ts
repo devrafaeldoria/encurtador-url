@@ -18,7 +18,7 @@ export const create = async (req: Request, res: Response) => {
 
   if (hasEmail instanceof Error && hasName instanceof Error) {
     const user = (await UserServices.create(name, email, password)) as UserInterface;
-    const token = JWT.sign({ id: user.id }, process.env.JWT_SECRET_KEY as string, { expiresIn: '2h' });
+    const token = JWT.sign({ id: user.id }, process.env.JWT_SECRET_KEY as string, { expiresIn: '48h' });
     return res.status(401).json({ user, token });
   } else {
     return res.status(400).json({ error: 'User already exists' });
@@ -37,7 +37,7 @@ export const login = async (req: Request, res: Response) => {
   if (user instanceof Error) {
     return res.status(400).json({ error: user.message });
   } else {
-    const token = JWT.sign({ id: user.id }, process.env.JWT_SECRET_KEY as string, { expiresIn: '2h' });
+    const token = JWT.sign({ id: user.id }, process.env.JWT_SECRET_KEY as string, { expiresIn: '48h' });
     return res.json({ user, token });
   }
 };

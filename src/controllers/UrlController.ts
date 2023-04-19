@@ -70,3 +70,28 @@ export const useUrl = async (req: Request, res: Response) => {
 
   res.redirect(`${baseUrl}${url}`);
 };
+
+export const changeNameUrl = async (req: AuthRequest, res: Response) => {
+  const { id, newName } = req.params;
+  const userId = req.userId;
+
+  if (!id && !newName) {
+    return res.status(401).json({ error: 'nothing to update ' });
+  }
+
+  const hasName = await UrlServices.findByName(newName);
+
+  if (hasName instanceof Error) {
+    const canUpdate = await UserServices.verifyUserHasUrl(userId as string, id);
+
+    if (canUpdate instanceof Error) {
+      return res.status(403).json({ error: canUpdate.message });
+    }
+
+    await UrlServices.updateName(userId as string, id, newName);
+
+    return res.json({ update: true });
+  } else {
+    return res.status(401).json({ error: 'name already exists' });
+  }
+};
